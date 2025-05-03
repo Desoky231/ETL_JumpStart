@@ -1,0 +1,33 @@
+{
+    "ranges": [
+      { "col": "average_rating", "min": 0.0, "max": 5.0 },
+      { "col": "ratings_count", "min": 0, "max": null },
+      { "col": "text_reviews_count", "min": 0, "max": null },
+      { "col": "num_pages", "min": 1, "max": 10000 },
+      { "col": "publication_date", "type": "date_not_future" }
+    ],
+  
+    "regex": [
+      { "col": "isbn",   "pattern": "^[0-9]{10}$" },
+      { "col": "isbn13", "pattern": "^[0-9]{13}$" },
+      { "col": "language_code", "pattern": "^[a-z]{2,3}$" }
+    ],
+  
+    "custom_checks": [
+      { "col": "isbn",   "udf": "validate_isbn10_checksum" },
+      { "col": "isbn13", "udf": "validate_isbn13_checksum" }
+    ],
+  
+    "mappings": {
+      "publisher_fix": {
+        "Scholastic Inc.": "Scholastic",
+        "Scholastic LLC": "Scholastic",
+        "Penguin Group":  "Penguin Random House"
+      }
+    },
+  
+    "defaults": {
+      "average_rating": 0.0
+    }
+  }
+  

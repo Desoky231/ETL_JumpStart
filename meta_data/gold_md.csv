@@ -1,0 +1,17 @@
+table_name,column_name,order
+books.csv,bookID,1
+books.csv,title,2
+books.csv,series,3
+books.csv,primary_author,4
+books.csv,all_authors,5
+books.csv,average_rating,6
+books.csv,ratings_count,7
+books.csv,text_reviews_count,8
+books.csv,isbn,9
+books.csv,isbn13,10
+books.csv,num_pages,11
+books.csv,publication_date,12
+books.csv,publisher,13
+books.csv,language,14
+books.csv,book_age,15
+books.csv,rating_popularity_score,16

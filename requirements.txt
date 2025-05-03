@@ -1,0 +1,5 @@
+apache-airflow==2.8.0
+pandas>=2.0.0
+ydata-profiling>=4.0.0
+sqlalchemy>=2.0.0
+python-dateutil>=2.8.0

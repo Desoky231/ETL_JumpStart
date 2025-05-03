@@ -1,0 +1,13 @@
+table_name,column_name,PK,NON_NULLABLE,UNIQUE,dtype
+books.csv,bookID,1,1,1,int
+books.csv,title,0,1,0,string
+books.csv,authors,0,1,0,string
+books.csv,average_rating,0,0,0,float
+books.csv,isbn,0,0,1,string
+books.csv,isbn13,0,1,1,string
+books.csv,language_code,0,0,0,string
+books.csv,num_pages,0,0,0,int
+books.csv,ratings_count,0,0,0,int
+books.csv,text_reviews_count,0,0,0,int
+books.csv,publication_date,0,0,0,date
+books.csv,publisher,0,0,0,string

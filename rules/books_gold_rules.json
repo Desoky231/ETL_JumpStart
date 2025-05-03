@@ -1,0 +1,47 @@
+{
+  "eng": "English",  "en":  "English",
+
+  "fre": "French",   "fr":  "French",
+
+  "spa": "Spanish",  "es":  "Spanish",
+
+  "mul": "Multiple languages",
+
+  "grc": "Ancient Greek",
+
+  "enm": "Middle English",
+
+  "ger": "German",   "de":  "German",
+
+  "jpn": "Japanese", "ja":  "Japanese",
+
+  "ara": "Arabic",   "ar":  "Arabic",
+
+  "nl":  "Dutch",    "nld": "Dutch",
+
+  "zho": "Chinese",  "chi": "Chinese", "zh": "Chinese",
+
+  "lat": "Latin",
+
+  "por": "Portuguese", "pt": "Portuguese",
+
+  "srp": "Serbian",  "sr":  "Serbian",
+
+  "ita": "Italian",  "it":  "Italian",
+
+  "rus": "Russian",  "ru":  "Russian",
+
+  "msa": "Malay",    "ms":  "Malay",
+
+  "wel": "Welsh",    "cym": "Welsh",
+
+  "swe": "Swedish",  "sv":  "Swedish",
+
+  "nor": "Norwegian", "no": "Norwegian",
+
+  "tur": "Turkish",  "tr":  "Turkish",
+
+  "ale": "Aleut",
+
+  "kor": "Korean",   "ko":  "Korean"
+}

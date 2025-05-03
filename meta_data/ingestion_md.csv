@@ -1,0 +1,2 @@
+table_name,file_name,file_format,delimiter,source_path,destination_path,source_name
+books.csv,books.csv,csv,",",1_source\unknown,2_bronze,unknown
