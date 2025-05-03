@@ -1,0 +1,2 @@
+table_name,source_name,silver_partition,silver_file,ingestion_timestamp,gold_processed_at,rows_in,rows_out,status,error_msg
+books.csv,unknown,unknown/year=2025/month=05/day=03,books.csv,2025-05-03T17:27:30Z,2025-05-03T17:27:34Z,8556,8556,SUCCESS,
