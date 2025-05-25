@@ -1,72 +1,96 @@
 
-# Bike Store Data Pipeline
+# Books ETL Jump‑Start 📚🚀
 
-This project demonstrates an end-to-end data ingestion and transformation pipeline for a fictional bike store business. The goal is to extract, clean, and transform raw operational data into a dimensional model suitable for analytics.
+A quick‑start, end‑to‑end data pipeline that ingests raw book metadata, cleans and enriches it through a Medallion-style workflow (Bronze → Silver → Gold), and finally loads the curated data to a small SQLite “warehouse”.  
+Everything is pure **Python** and can run:
+
+- directly on your host with a single `python ...` command per stage, or  
+- inside Apache Airflow (Docker Compose example provided).
 
 ---
 
-## 📁 Project Structure
-
+## Repository layout
+```bash
+├── 1_source/unknown/books.csv # raw dump you start from
+├── bronze.py # Bronze: minimal ingestion + checksum
+├── silver.py # Silver: data‑quality & standardisation
+├── gold.py # Gold: feature engineering
+├── load.py # Loads curated data into SQLite
+├── dags/pipeline.py # One Airflow DAG that chains the 4 scripts
+├── {2_bronze,3_silver,4_gold}/ # generated layer folders
+├── manifests/ # de‑duplication manifests
+├── meta_data/ # metadata snapshots per layer
+└── docker-compose.yaml # optional Airflow stack
 ```
-use case/
-├── 1_source/           # Raw source data
-├── 2_landing/          # Cleaned & structured data per date
-├── 3_profiling/        # Data profiling outputs (HTML reports)
-├── 4_cleaned/          # Cleaned tables ready for modeling
-├── 5_datamart/         # Final dimensional model (star schema)
-├── meta_data.csv       # Metadata rules (types, PKs, nullability, etc.)
-├── utils.py            # Helper functions
-└── *.ipynb             # Notebooks for each pipeline stage
+
+## Execution order
+
+```lua
+bronze.py  →  silver.py  →  gold.py  →  load.py
+```
+
+## Manifests vs Metadata – What Are They?
+
+These files are lightweight CSVs that support transparency and reproducibility in your ETL workflow:
+
+| File                      | Purpose                                                                 |
+|---------------------------|-------------------------------------------------------------------------|
+| `manifests/*_manifest.csv` | Tracks file hashes & row counts to avoid duplicate processing.          |
+| `meta_data/*_md.csv`       | Captures schema summaries (e.g., column stats, null %, timestamps).     |
+
+---
+
+## Cleaning & Feature Engineering Highlights
+
+| Layer  | Key Actions                                                                   |
+|--------|--------------------------------------------------------------------------------|
+| Bronze | Initial ingestion, compute checksums, and store raw records.                  |
+| Silver | Data validation, de-duplication, standardization (e.g., authors, dates).      |
+| Gold   | Feature extraction: `book_age`, `popularity_score`, structured author lists.  |
+
+---
+
+## Docker Support 🐳
+
+You can run the entire ETL pipeline inside a Docker container for portability and consistency.
+
+### 📄 Dockerfile Example
+Here's a sample `Dockerfile` to build and run the pipeline:
+
+```Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "load.py"]
+```
+
+### 🚀 Build and Run the Container
+
+To build the image:
+```bash
+docker build -t books-etl .
+```
+
+To run the pipeline from inside the container:
+```bash
+docker run --rm books-etl
+```
+
+To run a specific script (e.g., `silver.py`):
+```bash
+docker run --rm books-etl python silver.py
 ```
 
 ---
 
-## 🧱 Data Model
+## Contributing & Next Steps
 
-The dimensional model is based on a **star schema** with:
-
-- 4 dimension tables: `Customer_DIM`, `Product_DIM`, `Store_DIM`, `Staff_DIM`
-- 1 calendar table: `Date_DIM`
-- 2 fact tables: `Sales_Fact`, `Stock_Fact`
-
-![ERD](BIKE%20STORE%20ERD.png)
-
----
-
-## 🔄 Pipeline Flow
-
-1. **Ingest**
-   - Raw CSVs are copied from the source directory.
-
-2. **Clean**
-   - Apply validation based on `meta_data.csv`:
-     - Remove nulls in non-nullable columns
-     - Enforce data types
-     - Drop duplicates based on primary and unique keys
-
-3. **Profile**
-   - Generate visual profiling reports using `ydata-profiling`
-
-4. **Build Dimensional Model**
-   - Construct star schema using cleaned data
-   - Create surrogate keys and map date fields to `Date_DIM`
-
-5. **Export**
-   - Final tables saved to `5_datamart/` as flat files (CSV)
-
----
-
-## ✅ Output Tables (example)
-
-- `Customer_DIM.csv`
-- `Product_DIM.csv`
-- `Sales_Fact.csv`
-- `Date_DIM.csv`
-- `Stock_Fact.csv`
-
----
-
-## 📌 Notes
-
-- All data is processed locally using Python (Pandas)
-- Designed for reproducibility and clarity in ETL design
+- ✅ Add tests to validate transformation logic.
+- 🛠️ Use a PostgreSQL + Redis setup for production-scale scheduling.
+- 🔁 Automate with CI tools like GitHub Actions or pre-commit hooks.
